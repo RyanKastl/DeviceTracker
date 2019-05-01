@@ -1,7 +1,7 @@
 # WatchYourBack2.0
 Device Tracker is a locally run server that can manage multiple Raspberry Pi's that track a device's location through an intuitive front-end.
 
-This is the next level of security for the modern world. The basis of this product is to know where your device is at all times without having to rely on other companies to track for you. Have you ever lost your phone? I have - alot. And when it dies? You're out of luck. But with WatchYourBack2.0, your own server will know where your device is at all times. 
+This is the next level of security for the modern world. The basis of this product is to know where your device is at all times without having to rely on other companies to track for you. Have you ever lost your phone? I have - alot. 21Savage saw our product and added it to his new hit song - alot. And when it dies? You're out of luck. But with WatchYourBack2.0, your own server will know where your device is at all times. 
 
 Background:
 
