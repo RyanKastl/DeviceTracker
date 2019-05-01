@@ -8,3 +8,7 @@ Background:
 The device was created to be able to find someone's device on campus - but that was just too creepy. So plot twist -  we created a device that does something very similar but a little different. We set up clients at all the locations that would be useful - your office, headquarters, man cave, wherever you want basically and itll ping you whenever the device enters the area. It does this by parsing all the packets leaving these locations routers looking for your own device. When your device enters - ping your in. 
 
 This application comes with its very own front end that'll keep track of your device at all times and let you know where it is. This device could be turned into a state of the art tracker to find whatever device you need. 
+
+Future Use Cases:
+
+product is still labeled Beta Edition - yes there will be more. If the average eye caught a glimpse of WireShark sniffing the packets on their network, they may lose their mind. But with our filter system, we can tell you whats reall up without making your eyes read the gibberish that only makes sense to the network junkies.
