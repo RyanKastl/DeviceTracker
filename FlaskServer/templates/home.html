@@ -1,7 +1,65 @@
 {% extends "layout.html" %}
 {% block content %}
-  <div class="home">
-    <h1>A Python product</h1>
-    <p>This website was built with Python via the Flask framework. {{ testVar }}</p>
-  </div>
+
+<script>
+	(function() {
+
+	  	var app = angular.module("DeviceTracker");
+	  
+	  	app.controller("MainController", ['$scope', '$interval', '$location', '$rootScope', MainController]);
+
+	  	function MainController($scope, $interval, $location, $rootScope) {
+
+	  		$scope.editMode = false;
+
+		    $scope.devices = {{ tracking|tojson }};
+
+		    $scope.getDevices = function () {
+				$.get(
+				    "/refresh/",
+				    {paramOne : 1, paramX : 'abc'},
+				    function(data) {
+				    	$scope.devices = data;
+				    }
+				);
+		    };
+
+		    $scope.deleteDevice = function (key) {
+		    	$.post(
+		    		"/delete/", 
+		    		{dKey: key}, 
+		    		function(res) {
+		    			console.log(res)
+		    	});
+		    }
+
+		    $interval(function() {
+		    	$scope.getDevices();
+		    }, 500);
+	  	};
+	}());
+</script>
+
+<div class="home" ng-controller="MainController">
+    <h1>Tracked Devices:</h1>
+    <div ng-click="getDevices()"> REFRESH </div>
+    <form action="/" method="post">
+    	<fieldset>
+	    	Device MAC:<br>
+			<input type="text" name="device" value=""><br>
+			Device Name:<br>
+			<input type="text" name="name" value=""><br><br>
+			<input type="submit" value="Add Device">
+		</fieldset>
+    </form>
+    <table>
+    	<tr>
+    		<td> Device </td> <td> Name </td> <td> Last Seen </td> <td ng-click="editMode = !editMode"> EDIT MODE </td>
+    	</tr>
+  		<tr ng-repeat="(key, value) in devices">
+    		<td> [[ value['addr'] ]] </td> <td> [[ value['name'] ]] </td> <td> [[ value['lastSeen'] ]] </td> 
+    		<td ng-if="editMode" ng-click="deleteDevice(key)"> DELETE </td>
+  		</tr>
+	</table>
+</div>
 {% endblock %}

@@ -1,0 +1,38 @@
+* {
+	background-color: #444444;
+}
+
+.square {
+	height: 10px;
+	width: 10px;
+}
+
+.blue {
+	background-color: blue;
+}
+
+.black {
+	background-color: black;
+}
+
+.red {
+	background-color: red;
+}
+
+.yellow {
+	background-color: yellow;
+}
+
+.square-select {
+	height: 20px;
+	width: 20px;
+	cursor: pointer;
+}
+
+.auto-play {
+	padding: 5px;
+	border: 2px solid black;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
