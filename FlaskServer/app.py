@@ -35,14 +35,17 @@ def home():
 def about():
     return render_template('about.html')
 
-# Data should be in the form of "ClientID:Device"
+# Data should be in the form of "ClientID/Device"
 
 @app.route('/tracker/', methods=['POST'])
-def printData():
+def report():
     if request.method == 'POST':
         data = request.form
-        print(data['mssg'])
-        setLastSeen(data['mssg'])
+        report = data['mssg'].split("/")
+        print(report)
+        if (len(report) != 2):
+            return 'Bad Format', 400
+        track[report[1]]['lastSeen'] = report[0]
     return 'Received.', 200
 
 @app.route('/refresh/')
@@ -66,5 +69,5 @@ def delete():
 
 
 if __name__ == '__main__':
-    #app.run(host='0.0.0.0')
-    app.run()
+    app.run(host='0.0.0.0')
+    #app.run()
