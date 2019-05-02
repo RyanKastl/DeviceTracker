@@ -5,6 +5,8 @@ import threading
 reportURL = "http://192.168.1.6:5000/tracker/"
 targetsURL = "http://192.168.1.6:5000/refresh/"
 key = "api key here"
+
+# name must NOT include any "\"s.
 name = "Ryan's Apartment"
 
 targets = {}
@@ -28,11 +30,11 @@ for packet in capture.sniff_continuously():
 	dst = packet['ETH'].dst
 	
 	if (src in targets):
-		data = {'mssg': name + '/' + src}
+		data = {'mssg': name + '\\' + src}
 		r = requests.post(url = reportURL, data = data)
 		print(r.text)
 	if (dst in targets):
-		data = {'mssg': name + '/' + dst}
+		data = {'mssg': name + '\\' + dst}
 		r = requests.post(url = reportURL, data = data)
 		print(r.text)
 
