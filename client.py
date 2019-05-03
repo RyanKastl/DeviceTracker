@@ -12,9 +12,12 @@ name = "Ryan's Apartment"
 targets = {}
 
 def refreshTargets(timerStop):
-	res = requests.get(url = targetsURL)
-	global targets
-	targets = res.json()
+	try:
+		res = requests.get(url = targetsURL)
+		global targets
+		targets = res.json()
+	except:
+		print("No connection to server.")
 	if not timerStop.is_set():
 		threading.Timer(10, refreshTargets, [timerStop]).start()
 
@@ -29,14 +32,17 @@ for packet in capture.sniff_continuously():
 	src = packet['ETH'].src
 	dst = packet['ETH'].dst
 	
-	if (src in targets):
-		data = {'mssg': name + '\\' + src}
-		r = requests.post(url = reportURL, data = data)
-		print(r.text)
-	if (dst in targets):
-		data = {'mssg': name + '\\' + dst}
-		r = requests.post(url = reportURL, data = data)
-		print(r.text)
+	try:
+		if (src in targets):
+			data = {'mssg': name + '\\' + src}
+			r = requests.post(url = reportURL, data = data)
+			print(r.text)
+		if (dst in targets):
+			data = {'mssg': name + '\\' + dst}
+			r = requests.post(url = reportURL, data = data)
+			print(r.text)
+	except:
+		print("No connection to server.")
 
 
 
