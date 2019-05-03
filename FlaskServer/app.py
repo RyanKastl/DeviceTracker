@@ -7,9 +7,7 @@ app = Flask(__name__)
 
 key = "api key here"
 
-track = {
-
-}
+track = {}
 
 def addDevice(device, name, lastSeen = "N/A"):
     dev = {
@@ -23,8 +21,8 @@ def addDevice(device, name, lastSeen = "N/A"):
 def home():
     if request.method == 'POST':
         data = request.form
-        dev = addDevice(data['device'], data['name'])
-        track[data['device']] = dev
+        dev = addDevice(data['device'].lower(), data['name'])
+        track[data['device'].lower()] = dev
     return render_template('home.html', tracking = track)
 
 @app.route('/about/')
