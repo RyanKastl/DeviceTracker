@@ -2,9 +2,12 @@ import requests
 import pyshark
 import threading
 
+# Replace this info with your own.
 reportURL = "http://192.168.1.6:5000/tracker/"
 targetsURL = "http://192.168.1.6:5000/refresh/"
+loginURL = "http://192.168.1.6:5000/login/"
 key = "api key here"
+auth = {'apiKey': key}
 
 # name must NOT include any "\"s.
 name = "Ryan's Apartment"
@@ -13,7 +16,7 @@ targets = {}
 
 def refreshTargets(timerStop):
 	try:
-		res = requests.get(url = targetsURL)
+		res = requests.post(url = targetsURL, data = auth)
 		global targets
 		targets = res.json()
 	except:
@@ -34,11 +37,13 @@ for packet in capture.sniff_continuously():
 	
 	try:
 		if (src in targets):
-			data = {'mssg': name + '\\' + src}
+			data = {'apiKey': key,
+					'mssg': name + '\\' + src}
 			r = requests.post(url = reportURL, data = data)
 			print(r.text)
 		if (dst in targets):
-			data = {'mssg': name + '\\' + dst}
+			data = {'apiKey': key,
+					'mssg': name + '\\' + dst}
 			r = requests.post(url = reportURL, data = data)
 			print(r.text)
 	except:
