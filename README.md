@@ -15,6 +15,14 @@ Device Tracker is a locally run server that can manage multiple clients (set up 
 6. You may need to port forward your server port to your server machine.
 7. Finally go to your web server ip address, login, and you're set!
 
+### Credits
+This project has been developed for CS460 taught by Professor Bambenek at the University of Illinois Urbana-Champaign.
+**Developers**
+- Ryan Kastl
+- Sameer Jain
+- Nick Tuczak
+- Liam Griffin
+
 
 # Alternate Description
 # WatchYourBack2.0
