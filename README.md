@@ -17,7 +17,7 @@ Device Tracker is a locally run server that can manage multiple clients (set up 
 
 ### Credits
 This project has been developed for CS460 taught by Professor Bambenek at the University of Illinois Urbana-Champaign.
-**Developers**
+- **Developers**
 - Ryan Kastl
 - Sameer Jain
 - Nick Tuczak
