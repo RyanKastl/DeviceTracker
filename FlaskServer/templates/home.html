@@ -12,7 +12,7 @@
 
 	  		$scope.editMode = false;
 
-		    $scope.devices = {{ tracking|tojson }};
+		    $scope.devices = {}; 
 
 		    $scope.getDevices = function () {
 				$.get(
@@ -42,8 +42,8 @@
 
 <div class="home" ng-controller="MainController">
     <h1>Tracked Devices:</h1>
-    <div ng-click="getDevices()"> REFRESH </div>
-    <form action="/" method="post">
+    <div ng-click="getDevices()"> <button type="button"> FORCE REFRESH </button></div>
+    <form action="/home/" method="post">
     	<fieldset>
 	    	Device MAC:<br>
 			<input type="text" name="device" value=""><br>

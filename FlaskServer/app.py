@@ -1,11 +1,13 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, make_response
 from flask import request
 from flask import jsonify
 import threading
 
 app = Flask(__name__)
 
+# Replace this info with your own.
 key = "api key here"
+password = "Mellon"
 
 track = {}
 
@@ -17,13 +19,36 @@ def addDevice(device, name, lastSeen = "N/A"):
     }
     return dev
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+def welcome():
+    auth = request.cookies.get('apiKey')
+    if (auth == key):
+        return redirect(url_for('home'))
+    return render_template('login.html')
+
+@app.route('/login/', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        data = request.form
+        attempt = data['pass']
+        if (attempt == password):
+            resp = make_response(render_template('home.html'))
+            resp.set_cookie('apiKey', key)
+            return resp
+        return redirect(url_for('welcome'))
+
+    return 'This is a POST only endpoint.', 200
+
+@app.route('/home/', methods=['GET', 'POST'])
 def home():
+    auth = request.cookies.get('apiKey')
+    if (auth != key):
+        return redirect(url_for('welcome'))
     if request.method == 'POST':
         data = request.form
         dev = addDevice(data['device'].lower(), data['name'])
         track[data['device'].lower()] = dev
-    return render_template('home.html', tracking = track)
+    return render_template('home.html')
 
 @app.route('/about/')
 def about():
@@ -35,23 +60,38 @@ def about():
 def report():
     if request.method == 'POST':
         data = request.form
+        if (data['apiKey'] != key):
+            return 'You are not logged in.', 403
         report = data['mssg'].split("\\")
         if (len(report) != 2):
             return 'Bad Format', 400
         track[report[1]]['lastSeen'] = report[0]
     return 'Received.', 200
 
-@app.route('/refresh/')
+@app.route('/refresh/', methods=['GET', 'POST'])
 def refresh():
+    if request.method == 'POST':
+        data = request.form
+        auth = data['apiKey']
+        if (auth != key):
+            return 'You are not logged in.', 403
+    else:
+        auth = request.cookies.get('apiKey')
+        if (auth != key):
+            return 'You are not logged in.', 403
     return jsonify(track)
 
 @app.route('/delete/', methods=['POST'])
 def delete():
+    auth = request.cookies.get('apiKey')
+    global key
+    if (auth != key):
+        return 'You are not logged in.', 403
     if request.method == 'POST':
-        key = request.form['dKey']
-        del track[key]
+        dev = request.form['dKey']
+        del track[dev]
         return 'Device Deleted', 200
-    return 'This is a POST endpoint', 200
+    return 'This is a POST only endpoint', 200
 
 def loadTargets():
     try:
