@@ -17,7 +17,7 @@
 		    $scope.getDevices = function () {
 				$.get(
 				    "/refresh/",
-				    {paramOne : 1, paramX : 'abc'},
+				    {},
 				    function(data) {
 				    	$scope.devices = data;
 				    }
