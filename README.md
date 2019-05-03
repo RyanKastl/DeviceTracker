@@ -4,7 +4,7 @@ Device Tracker is a locally run server that can manage multiple clients (set up 
 ## Infrastructure
 - DeviceTracker runs a python Flask backend and an Angularjs frontend. 
 - Requires authentication via cookies in a browser or an api key supplied by a client.
-- Monitors devices by their MAC addresses.
+- Monitors devices by their MAC addresses using pyshark, a python wrapper for tshark, the CLI for Wireshark.
 
 ## Setup
 1. The web server requires Python3 and Flask.
