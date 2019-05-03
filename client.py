@@ -5,7 +5,6 @@ import threading
 # Replace this info with your own.
 reportURL = "http://192.168.1.6:5000/tracker/"
 targetsURL = "http://192.168.1.6:5000/refresh/"
-loginURL = "http://192.168.1.6:5000/login/"
 key = "api key here"
 auth = {'apiKey': key}
 
